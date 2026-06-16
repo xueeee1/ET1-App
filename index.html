@@ -30,17 +30,16 @@
   }
 
   .phone {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
+    position: fixed;
+    inset: 0;
+    width: 100%;
     max-width: 430px;
     margin: 0 auto;
     background: #16181c;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    /* 让出 iPhone 真实状态栏（刘海/灵动岛）的空间，env 失效时 59px 保底 */
+    /* 让出 iPhone 真实状态栏（刘海/灵动岛）的空间，env 失效时 12px 保底 */
     padding-top: max(env(safe-area-inset-top), 12px);
   }
 
@@ -5115,12 +5114,11 @@
   .sub-page,
   .perform-subpage,
   .agent-page,
-  .remote-page,
   .robot-detail-page,
   .auth-page {
     height: 100vh;
     height: 100dvh;
-    /* env 失效时(如部分浏览器/非全屏)用 59px 保底，避免标题被状态栏遮挡 */
+    /* env 失效时用 12px 保底，避免标题被状态栏遮挡 */
     padding-top: max(env(safe-area-inset-top), 12px);
   }
   /* auth-page 原有左右内边距，单独保留并补顶部 */
