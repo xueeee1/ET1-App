@@ -12,6 +12,14 @@
 <link rel="manifest" href="data:application/json,%7B%22name%22%3A%22GALBOT%20ET1%22%2C%22short_name%22%3A%22ET1%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%2316181c%22%2C%22theme_color%22%3A%22%2316181c%22%2C%22start_url%22%3A%22.%22%7D">
 <title>GALBOT ET1</title>
 <style>
+  /* ============================================ */
+  /* 全局安全区变量：所有页面统一引用，改一处即全局生效 */
+  /* ============================================ */
+  :root {
+    --safe-top: max(env(safe-area-inset-top), 12px);
+    --safe-bottom: env(safe-area-inset-bottom);
+  }
+
   * {
     margin: 0;
     padding: 0;
@@ -29,6 +37,20 @@
     color: #fff;
   }
 
+  /* ============================================ */
+  /* 全局页面层统一规则：所有全屏覆盖页面共用一套高度与安全区 */
+  /* 用 !important 压过各页面自己写的 height:100vh，根治比例问题 */
+  /* ============================================ */
+  .agent-page,
+  .config-page,
+  .settings-page,
+  .robot-detail-page,
+  .perform-subpage,
+  .sub-page {
+    height: 100dvh !important;
+    padding-top: var(--safe-top) !important;
+  }
+
   .phone {
     position: fixed;
     inset: 0;
@@ -40,7 +62,7 @@
     display: flex;
     flex-direction: column;
     /* 让出 iPhone 真实状态栏（刘海/灵动岛）的空间，env 失效时 12px 保底 */
-    padding-top: max(env(safe-area-inset-top), 12px);
+    padding-top: var(--safe-top);
   }
 
   /* ===== 预览模式：隐藏自绘的假手机状态栏，改用 iPhone 真状态栏 ===== */
@@ -3267,7 +3289,7 @@
     flex: 1;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding: 6px 18px 100px;
+     padding: 6px 18px calc(120px + var(--safe-bottom));
   }
   .remote-body::-webkit-scrollbar { width: 0; }
 
@@ -5107,23 +5129,11 @@
 
   /* ============================================ */
   /* ===== 全局安全区适配（iPhone 全屏 PWA） ===== */
-  /* 所有全屏页面统一让出顶部状态栏/灵动岛，避免标题被遮挡 */
+  /* auth-page：顶部安全区 + 原有左右内边距 */
   /* ============================================ */
-  .settings-page,
-  .config-page,
-  .sub-page,
-  .perform-subpage,
-  .agent-page,
-  .robot-detail-page,
   .auth-page {
-    height: 100vh;
     height: 100dvh;
-    /* env 失效时用 12px 保底，避免标题被状态栏遮挡 */
-    padding-top: max(env(safe-area-inset-top), 12px);
-  }
-  /* auth-page 原有左右内边距，单独保留并补顶部 */
-  .auth-page {
-    padding: max(env(safe-area-inset-top), 12px) 28px 0;
+    padding: var(--safe-top) 28px 0;
   }
 </style>
 </head>
